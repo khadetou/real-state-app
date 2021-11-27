@@ -1,7 +1,8 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Flex, Box, Text, Button } from '@chakra-ui/react';
+import { baseUrl, fetchApi } from '../utils/fetchApi';
 
 interface Props {
   purpose?: string;
@@ -72,3 +73,13 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+
+// export function  async getStaticProps ():GetStaticProps {
+//   const propertyForSale = await  fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&perpose=for-sale&hitsPerPage=6`);
+//   const propertyRent =  fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&perpose=for-rent&hitsPerPage=6`);
+
+//   return {
+//     props:{}
+//   }
+// }

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseUrl = "bayut.p.rapidapi.com";
+export const baseUrl = "https://bayut.p.rapidapi.com";
 
 export const fetchApi = async (url: string) => {
   const { data } = await axios.get(url, {
@@ -9,6 +9,7 @@ export const fetchApi = async (url: string) => {
       "x-rapidapi-key": "52f42ef86dmsh9d62d56520f8006p18a065jsnfb2382b62448",
     },
   });
+  return data;
 };
 
 // let options = {

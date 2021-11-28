@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Flex, Box, Text, Button } from '@chakra-ui/react';
 import { baseUrl, fetchApi } from '../utils/fetchApi';
+import axios from 'axios';
 
 interface Props {
   purpose?: string;
@@ -42,7 +43,11 @@ const Banner = ({ purpose, title1, title2, description1, description2, linkName,
   )
 }
 
-const Home: NextPage = () => {
+const Home: NextPage<{
+  propertiesForSale: any
+  propertiesForRent: any
+}> = ({ propertiesForSale, propertiesForRent }) => {
+  console.log(propertiesForSale, propertiesForRent);
   return (
     <Box >
       <Banner
@@ -75,11 +80,19 @@ const Home: NextPage = () => {
 export default Home
 
 
-// export function  async getStaticProps ():GetStaticProps {
-//   const propertyForSale = await  fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&perpose=for-sale&hitsPerPage=6`);
-//   const propertyRent =  fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&perpose=for-rent&hitsPerPage=6`);
+export const getStaticProps: GetStaticProps = async () => {
 
-//   return {
-//     props:{}
-//   }
-// }
+  const propertyForSale = await fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&perpose=for-sale&hitsPerPage=6`);
+  const propertyForRent = await fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&perpose=for-rent&hitsPerPage=6`);
+
+
+
+  return {
+    props: {
+      propertiesForSale: propertyForSale?.hits,
+      propertiesForRent: propertyForRent?.hits,
+    }
+  }
+}
+
+

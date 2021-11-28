@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Flex, Box, Text, Button } from '@chakra-ui/react';
 import { baseUrl, fetchApi } from '../utils/fetchApi';
-import axios from 'axios';
+import Property from '../components/Property';
 
 interface Props {
   purpose?: string;
@@ -43,10 +43,7 @@ const Banner = ({ purpose, title1, title2, description1, description2, linkName,
   )
 }
 
-const Home: NextPage<{
-  propertiesForSale: any
-  propertiesForRent: any
-}> = ({ propertiesForSale, propertiesForRent }) => {
+const Home: NextPage<any> = ({ propertiesForSale, propertiesForRent }) => {
   console.log(propertiesForSale, propertiesForRent);
   return (
     <Box >
@@ -61,7 +58,10 @@ const Home: NextPage<{
         linkName="/search?purpose=for-rent"
       />
       <Flex flexWrap="wrap">
+        {propertiesForRent.map((propertyForRent: any) =>
+          <Property key={propertyForRent.id} property={propertyForRent} />
 
+        )}
       </Flex>
       <Banner
         purpose={"Buy A Home"}
@@ -73,6 +73,9 @@ const Home: NextPage<{
         imageUrl="https://bayut-production.s3.eu-central-1.amazonaws.com/image/110993385/6a070e8e1bae4f7d8c1429bc303d2008"
         linkName="/search?purpose=for-rent"
       />
+      {propertiesForSale.map((property: any) =>
+        <Property key={property.id} property={property} />
+      )}
     </Box>
   )
 }
